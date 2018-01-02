@@ -1,0 +1,24 @@
+<resources>
+    <string name="app_name">QuizZz</string>
+    <string name="title_activity_drawer">DrawerActivity</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
+
+    <!-- UI Strings -->
+    <string name="quiz_title_label">Title</string>
+    <string name="quiz_description_label">Description</string>
+    <string name="save_quiz_button">Save</string>
+    <string name="username_label">Username</string>
+    <string name="password_label">Password</string>
+    <string name="login_submit">Log in</string>
+
+    <!-- Prefs Strings -->
+    <string name="prefs_is_logged_in">IsLoggedIn</string>
+    <string name="prefs_basic_auth">BasicAuth</string>
+    <string name="prefs_user_id">UserId</string>
+    <string name="prefs_username">Username</string>
+    <string name="prefs_email">Email</string>
+</resources>

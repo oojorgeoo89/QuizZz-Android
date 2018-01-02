@@ -1,0 +1,74 @@
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="rv.jorge.quizzz.screens.HomeFragment">
+
+    <TextView
+        android:id="@+id/quiz_title_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="24dp"
+        android:textAppearance="@android:style/TextAppearance.Material"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:text="@string/quiz_title_label"
+        tools:text="Title" />
+
+    <EditText
+        android:id="@+id/quiz_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
+        app:layout_constraintStart_toStartOf="@id/quiz_title_label"
+        app:layout_constraintTop_toBottomOf="@id/quiz_title_label"
+        android:maxLength="100"
+        tools:text="How much do you know about calimero?" />
+
+    <TextView
+        android:id="@+id/quiz_description_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:textAppearance="@android:style/TextAppearance.Material"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@id/quiz_title"
+        app:layout_constraintTop_toBottomOf="@id/quiz_title"
+        android:text="@string/quiz_description_label"
+        tools:text="Description:" />
+
+    <EditText
+        android:id="@+id/quiz_description"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
+        app:layout_constraintStart_toStartOf="@id/quiz_description_label"
+        app:layout_constraintTop_toBottomOf="@id/quiz_description_label"
+        android:maxLength="500"
+        android:singleLine="false"
+        android:lines="3"
+        android:maxLines="3"
+        tools:text="This quiz will challenge you in how much you know about the best cartoons ever, Calimero" />
+
+    <Button
+        android:id="@+id/submit_quiz"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="24dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginStart="24dp"
+        android:text="@string/save_quiz_button"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+</android.support.constraint.ConstraintLayout>
