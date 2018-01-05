@@ -14,9 +14,11 @@ import android.widget.Toast;
 import rv.jorge.quizzz.QuizApplication;
 import rv.jorge.quizzz.R;
 import rv.jorge.quizzz.service.QuizService;
+import rv.jorge.quizzz.service.support.HttpConstants;
 
 public class EditQuiz extends Fragment {
 
+    public static final String TAG = "EditQuiz";
     EditText quizTitle;
     EditText quizDescription;
     Button submitQuiz;
@@ -42,10 +44,15 @@ public class EditQuiz extends Fragment {
 
         submitQuiz.setOnClickListener(v -> {
             quizService.createQuiz(quizTitle.getText().toString(), quizDescription.getText().toString())
-                    .subscribe(populatedQuiz -> {
-                        Toast.makeText(getActivity(), "Quiz created with ID " + populatedQuiz.getId(), Toast.LENGTH_LONG).show();
+                    .subscribe(populatedQuizResponse -> {
+                        if (populatedQuizResponse.code() == HttpConstants.CREATED) {
+                            Toast.makeText(getActivity(), getString(R.string.saved_quiz), Toast.LENGTH_LONG).show();
+                        } else {
+                            Toast.makeText(getActivity(), getString(R.string.general_failure), Toast.LENGTH_LONG).show();
+                        }
+
                     }, throwable -> {
-                        Log.d("EditQuiz", "Request Error: " + throwable.getMessage());
+                        Log.d(TAG, "Request Error: " + throwable.getMessage());
                     });
         });
     }

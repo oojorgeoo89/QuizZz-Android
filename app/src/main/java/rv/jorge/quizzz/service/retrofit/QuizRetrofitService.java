@@ -1,6 +1,7 @@
 package rv.jorge.quizzz.service.retrofit;
 
 import io.reactivex.Observable;
+import retrofit2.Response;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
@@ -17,7 +18,7 @@ import rv.jorge.quizzz.model.support.Page;
 public interface QuizRetrofitService {
 
     @GET(RetrofitService.URL_PREFIX + "/quizzes/{quiz_id}")
-    Observable<Quiz> getQuiz(@Path("quiz_id") long quizId);
+    Observable<Response<Quiz>> getQuiz(@Path("quiz_id") long quizId);
 
     @GET(RetrofitService.URL_PREFIX + "/users/{user_id}/quizzes")
     Observable<Page<Quiz>> getMyQuizzes(@Path("user_id") long userId, @Query("page") int page);
@@ -27,5 +28,5 @@ public interface QuizRetrofitService {
 
     @FormUrlEncoded
     @POST(RetrofitService.URL_PREFIX + "/quizzes")
-    Observable<Quiz> createQuiz(@Field("name") String name, @Field("Description") String description);
+    Observable<Response<Quiz>> createQuiz(@Field("name") String name, @Field("Description") String description);
 }

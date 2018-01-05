@@ -17,12 +17,13 @@ import android.widget.TextView;
 
 import rv.jorge.quizzz.QuizApplication;
 import rv.jorge.quizzz.R;
+import rv.jorge.quizzz.screens.support.FragmentUmbrella;
 import rv.jorge.quizzz.service.UserService;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener
         , SharedPreferences.OnSharedPreferenceChangeListener
-        , LoginFragment.SuccessfulLoginListener {
+        , FragmentUmbrella {
 
     private FragmentManager fragmentManager;
     private NavigationView navigationView;
@@ -98,6 +99,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void swapFragment(Fragment fragment) {
+        fragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.main_fragment, fragment);
         fragmentTransaction.commit();
@@ -108,6 +110,9 @@ public class MainActivity extends AppCompatActivity
         if (key.equals(getString(R.string.prefs_is_logged_in))) {
             boolean isLoggedIn = sharedPreferences.getBoolean(getString(R.string.prefs_is_logged_in), false);
             updateNavigationDrawer(isLoggedIn);
+            if (isLoggedIn) {
+                swapFragment(new HomeFragment());
+            }
         }
     }
 
@@ -129,7 +134,10 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
-    public void userHasLoggedIn() {
-        swapFragment(new HomeFragment());
+    public void addFragmentToStack(Fragment newFragment) {
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.main_fragment, newFragment);
+        fragmentTransaction.addToBackStack(null);
+        fragmentTransaction.commit();
     }
 }

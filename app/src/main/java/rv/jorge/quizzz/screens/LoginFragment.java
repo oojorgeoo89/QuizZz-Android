@@ -5,6 +5,7 @@ import android.app.Fragment;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,9 +16,12 @@ import android.widget.Toast;
 
 import rv.jorge.quizzz.QuizApplication;
 import rv.jorge.quizzz.R;
+import rv.jorge.quizzz.screens.support.FragmentUmbrella;
 import rv.jorge.quizzz.service.UserService;
 
 public class LoginFragment extends Fragment {
+
+    private static final String TAG = "LoginFragment";
 
     EditText username;
     EditText password;
@@ -25,7 +29,7 @@ public class LoginFragment extends Fragment {
     TextView signIn;
     TextView forgotPassword;
 
-    SuccessfulLoginListener successfulLoginCallback;
+    private FragmentUmbrella fragmentUmbrella;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -48,7 +52,7 @@ public class LoginFragment extends Fragment {
         submitLoginButton.setOnClickListener(v -> {
             userService.login(username.getText().toString(), password.getText().toString())
             .subscribe(user -> {
-                successfulLoginCallback.userHasLoggedIn();
+                Log.d(TAG, "Logged in successfully as " + user.getUsername());
             }, throwable -> {
                 Toast.makeText(getActivity(), getString(R.string.user_login_failed), Toast.LENGTH_LONG).show();
             });
@@ -59,7 +63,7 @@ public class LoginFragment extends Fragment {
         });
 
         forgotPassword.setOnClickListener(v -> {
-            Toast.makeText(getActivity(), "Forgot Password Screen not yet implemented", Toast.LENGTH_LONG).show();
+            fragmentUmbrella.addFragmentToStack(new ForgotPasswordFragment());
         });
     }
 
@@ -67,26 +71,24 @@ public class LoginFragment extends Fragment {
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        checkParentActivity(activity);
+        if (activity instanceof FragmentUmbrella) {
+            fragmentUmbrella = (FragmentUmbrella) activity;
+        } else {
+            throw new RuntimeException(activity.toString()
+                    + " must implement SuccessfulLoginListener");
+        }
     }
 
     // For API >= 24
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        checkParentActivity(context);
-    }
-
-    private void checkParentActivity(Context context) {
-        if (context instanceof SuccessfulLoginListener) {
-            successfulLoginCallback = (SuccessfulLoginListener) context;
+        if (context instanceof FragmentUmbrella) {
+            fragmentUmbrella = (FragmentUmbrella) context;
         } else {
             throw new RuntimeException(context.toString()
                     + " must implement SuccessfulLoginListener");
         }
     }
 
-    public interface SuccessfulLoginListener {
-        void userHasLoggedIn();
-    }
 }

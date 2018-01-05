@@ -7,6 +7,7 @@ import android.preference.PreferenceManager;
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
+import retrofit2.Response;
 import rv.jorge.quizzz.R;
 import rv.jorge.quizzz.model.User;
 import rv.jorge.quizzz.service.retrofit.UserRetrofitService;
@@ -85,5 +86,11 @@ public class UserService {
 
     public boolean isLoggedIn() {
         return currentUser != null;
+    }
+
+    public Observable<Response<User>> forgotMyPassword(String email) {
+        return userRetrofitService.forgotMyPassword(email)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
     }
 }

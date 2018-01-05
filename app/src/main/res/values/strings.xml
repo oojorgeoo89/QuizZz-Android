@@ -14,10 +14,18 @@
     <string name="username_label">Username</string>
     <string name="password_label">Password</string>
     <string name="login_submit">Log in</string>
+    <string name="load_quizzes_error">An error occurred while loading the quizzes, please try again</string>
     <string name="navigation_drawer_default_username">Welcome to QuizZz!</string>
     <string name="user_login_failed">Login failed</string>
     <string name="sign_in_from_login">Not a member? Sign in instead!</string>
+
     <string name="forgot_password">Forgot my password</string>
+    <string name="forgot_password_label_title">Forgot your password?</string>
+    <string name="forgot_password_label_subtitle">Enter your email address and you will receive a link to reset your password</string>
+    <string name="forgot_password_submit">Send email</string>
+    <string name="forgot_password_success">You should soon receive an email with the instructions on how to reset your password</string>
+    <string name="forgot_password_faiulre">The request failed</string>
+    <string name="forgot_password_user_not_exist">The user doesn\'t exist</string>
 
     <!-- Prefs Strings -->
     <string name="prefs_is_logged_in">IsLoggedIn</string>
@@ -26,13 +34,8 @@
     <string name="prefs_username">Username</string>
     <string name="prefs_email">Email</string>
     <string name="toolbar_title">QuizZz</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="forgot_password_label_title">Forgot your password?</string>
-    <string name="forgot_password_label_subtitle">Enter your email address and you will receive a link to reset your password</string>
-    <string name="forgot_password_submit">Send email</string>
-    <string name="load_quizzes_error">An error occurred while loading the quizzes, please try again</string>
+    <string name="saved_quiz">Quiz saved</string>
+    <string name="general_failure">Unkown error</string>
 
 
 </resources>

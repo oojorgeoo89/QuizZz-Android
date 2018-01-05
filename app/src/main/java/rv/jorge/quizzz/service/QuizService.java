@@ -5,6 +5,7 @@ import java.util.List;
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
+import retrofit2.Response;
 import rv.jorge.quizzz.model.Quiz;
 import rv.jorge.quizzz.model.support.Page;
 import rv.jorge.quizzz.service.retrofit.QuizRetrofitService;
@@ -21,7 +22,7 @@ public class QuizService {
         this.quizRetrofitService = quizRetrofitService;
     }
 
-    public Observable<Quiz> createQuiz(String name, String description) {
+    public Observable<Response<Quiz>> createQuiz(String name, String description) {
         return quizRetrofitService.createQuiz(name, description)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
