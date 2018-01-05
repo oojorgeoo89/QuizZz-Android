@@ -98,6 +98,8 @@ public class QuizListFragment extends Fragment {
                     .subscribe(quizzes -> {
                         this.quizzes.addAll(quizzes);
                         quizRecyclerAdapter.onDataUpdate();
+                    }, throwable -> {
+                        Toast.makeText(getActivity(), getString(R.string.load_quizzes_error), Toast.LENGTH_LONG).show();
                     });
         }
     }
@@ -107,6 +109,8 @@ public class QuizListFragment extends Fragment {
                 .subscribe(quizzes -> {
                     this.quizzes.addAll(quizzes);
                     quizRecyclerAdapter.onDataUpdate();
+                }, throwable -> {
+                    Toast.makeText(getActivity(), getString(R.string.load_quizzes_error), Toast.LENGTH_LONG).show();
                 });
     }
 

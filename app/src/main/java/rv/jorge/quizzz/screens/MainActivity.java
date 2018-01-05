@@ -12,15 +12,17 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 
 import rv.jorge.quizzz.QuizApplication;
 import rv.jorge.quizzz.R;
 import rv.jorge.quizzz.service.UserService;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, SharedPreferences.OnSharedPreferenceChangeListener {
+        implements NavigationView.OnNavigationItemSelectedListener
+        , SharedPreferences.OnSharedPreferenceChangeListener
+        , LoginFragment.SuccessfulLoginListener {
 
     private FragmentManager fragmentManager;
     private NavigationView navigationView;
@@ -33,25 +35,30 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        userService = QuizApplication.get(this).getUserService();
+        prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        prefs.registerOnSharedPreferenceChangeListener(this);
+
+        // Setting up the toolbar
         setContentView(R.layout.activity_drawer);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setTitle(R.string.toolbar_title);
         setSupportActionBar(toolbar);
 
+        // Setting up the drawer
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
-        userService = QuizApplication.get(this).getUserService();
-
-        prefs = PreferenceManager.getDefaultSharedPreferences(this);
-        prefs.registerOnSharedPreferenceChangeListener(this);
-
+        // Setting up the drawer's menu
         navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-        updateNavigationDrawerMenu(userService.isLoggedIn());
+        updateNavigationDrawer(userService.isLoggedIn());
 
+        // Start up the initial fragment
         fragmentManager = getFragmentManager();
         if (fragmentManager.findFragmentById(R.id.main_fragment) == null) {
             swapFragment(new HomeFragment());
@@ -70,26 +77,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.drawer, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-
-        if (id == R.id.action_add) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
-    @SuppressWarnings("StatementWithEmptyBody")
-    @Override
     public boolean onNavigationItemSelected(MenuItem item) {
-        // Handle navigation view item clicks here.
         int id = item.getItemId();
 
         if (id == R.id.nav_home) {
@@ -119,17 +107,29 @@ public class MainActivity extends AppCompatActivity
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
         if (key.equals(getString(R.string.prefs_is_logged_in))) {
             boolean isLoggedIn = sharedPreferences.getBoolean(getString(R.string.prefs_is_logged_in), false);
-            updateNavigationDrawerMenu(isLoggedIn);
+            updateNavigationDrawer(isLoggedIn);
         }
     }
 
-    private void updateNavigationDrawerMenu(boolean isLoggedIn) {
+    private void updateNavigationDrawer(boolean isLoggedIn) {
         if (isLoggedIn) {
             navigationView.getMenu().clear();
             navigationView.inflateMenu(R.menu.drawer_logged_in);
+            ((TextView) navigationView.getHeaderView(0)
+                    .findViewById(R.id.navigation_drawer_username))
+                    .setText(prefs.getString(getString(R.string.prefs_username),
+                            getString(R.string.navigation_drawer_default_username)));
         } else {
             navigationView.getMenu().clear();
             navigationView.inflateMenu(R.menu.drawer_not_logged_in);
+            ((TextView) navigationView.getHeaderView(0)
+                    .findViewById(R.id.navigation_drawer_username))
+                    .setText(getString(R.string.navigation_drawer_default_username));
         }
+    }
+
+    @Override
+    public void userHasLoggedIn() {
+        swapFragment(new HomeFragment());
     }
 }
