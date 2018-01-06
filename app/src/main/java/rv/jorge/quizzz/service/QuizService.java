@@ -112,9 +112,8 @@ public class QuizService {
         }
 
         @Override
-        //TODO: Hardcoded User ID
         protected Observable<Page<Quiz>> getObservableQuery(int index) {
-            return quizRetrofitService.getMyQuizzes(1, index);
+            return quizRetrofitService.getMyQuizzes(index);
         }
     }
 

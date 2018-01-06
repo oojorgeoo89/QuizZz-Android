@@ -59,7 +59,7 @@ public class LoginFragment extends Fragment {
         });
 
         signIn.setOnClickListener(v -> {
-            Toast.makeText(getActivity(), "Sign In Screen not yet implemented", Toast.LENGTH_LONG).show();
+            fragmentUmbrella.addFragmentToStack(new SignupFragment());
         });
 
         forgotPassword.setOnClickListener(v -> {

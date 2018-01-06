@@ -20,8 +20,8 @@ public interface QuizRetrofitService {
     @GET(RetrofitService.URL_PREFIX + "/quizzes/{quiz_id}")
     Observable<Response<Quiz>> getQuiz(@Path("quiz_id") long quizId);
 
-    @GET(RetrofitService.URL_PREFIX + "/users/{user_id}/quizzes")
-    Observable<Page<Quiz>> getMyQuizzes(@Path("user_id") long userId, @Query("page") int page);
+    @GET(RetrofitService.URL_PREFIX + "/users/myQuizzes")
+    Observable<Page<Quiz>> getMyQuizzes(@Query("page") int page);
 
     @GET(RetrofitService.URL_PREFIX + "/quizzes")
     Observable<Page<Quiz>> getPublicQuizzes(@Query("page") int page, @Query("published") boolean published);

@@ -91,6 +91,7 @@ public class MainActivity extends AppCompatActivity
             swapFragment(new LoginFragment());
         } else if (id == R.id.nav_logout) {
             userService.logout();
+            swapFragment(new HomeFragment());
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

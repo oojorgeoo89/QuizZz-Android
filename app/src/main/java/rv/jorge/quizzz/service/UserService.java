@@ -67,6 +67,11 @@ public class UserService {
     }
 
 
+    public Observable<Response<User>> signup(String username, String email, String password) {
+        return userRetrofitService.signup(username, email, password)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
 
     public void logout() {
         basicAuthInterceptor.clearAuthToken();
@@ -93,4 +98,5 @@ public class UserService {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }
+
 }

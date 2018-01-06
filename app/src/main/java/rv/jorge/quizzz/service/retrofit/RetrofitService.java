@@ -22,8 +22,8 @@ public class RetrofitService {
         this.basicAuthInterceptor = basicAuthInterceptor;
 
         Retrofit.Builder retrofitBuilder = new Retrofit.Builder()
-                //.baseUrl("http://10.0.2.2:8080")
-                .baseUrl("http://192.168.1.104:8080")
+                .baseUrl("http://10.0.2.2:8080")
+                //.baseUrl("http://192.168.1.104:8080")
                 .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create());
 
