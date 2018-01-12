@@ -6,14 +6,12 @@
     tools:context="rv.jorge.quizzz.screens.HomeFragment">
 
     <TextView
+        style="@style/Text.Form"
         android:id="@+id/quiz_title_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
         android:layout_marginTop="24dp"
-        android:textAppearance="@android:style/TextAppearance.Material"
-        android:textSize="24sp"
-        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:text="@string/quiz_title_label"
@@ -32,17 +30,15 @@
         tools:text="How much do you know about calimero?" />
 
     <TextView
+        style="@style/Text.Form"
         android:id="@+id/quiz_description_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
-        android:textAppearance="@android:style/TextAppearance.Material"
-        android:textSize="24sp"
-        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="@id/quiz_title"
         app:layout_constraintTop_toBottomOf="@id/quiz_title"
         android:text="@string/quiz_description_label"
-        tools:text="Description:" />
+        tools:text="Description" />
 
     <EditText
         android:id="@+id/quiz_description"
@@ -63,12 +59,12 @@
         android:id="@+id/submit_quiz"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="24dp"
         android:layout_marginEnd="24dp"
         android:layout_marginStart="24dp"
+        android:layout_marginTop="24dp"
         android:text="@string/save_quiz_button"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/quiz_description" />
 
 </android.support.constraint.ConstraintLayout>

@@ -37,9 +37,7 @@
     <string name="saved_quiz">Quiz saved</string>
     <string name="general_failure">Unkown error</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="sign_up_label_title">Sign up with QuizZz!</string>
+    <string name="sign_up_label_title">Sign up!</string>
     <string name="sign_up_username_label">Username</string>
     <string name="sign_up_submit">Register</string>
     <string name="sign_up_email_label">Email</string>
@@ -51,6 +49,7 @@
     <string name="passwords_dont_match_warning">Passwords don\'t match</string>
     <string name="email_wrong_format_warning">Please, enter a valid email</string>
     <string name="empty_username_warning">Please, enter a username</string>
+    <string name="quiz_logo_label">QuizZz</string>
 
 
 </resources>
