@@ -17,16 +17,16 @@ import rv.jorge.quizzz.model.support.Page;
 
 public interface QuizRetrofitService {
 
-    @GET(RetrofitService.URL_PREFIX + "/quizzes/{quiz_id}")
+    @GET("/api/quizzes/{quiz_id}")
     Observable<Response<Quiz>> getQuiz(@Path("quiz_id") long quizId);
 
-    @GET(RetrofitService.URL_PREFIX + "/users/myQuizzes")
+    @GET("/api/users/myQuizzes")
     Observable<Page<Quiz>> getMyQuizzes(@Query("page") int page);
 
-    @GET(RetrofitService.URL_PREFIX + "/quizzes")
+    @GET("/api/quizzes")
     Observable<Page<Quiz>> getPublicQuizzes(@Query("page") int page, @Query("published") boolean published);
 
     @FormUrlEncoded
-    @POST(RetrofitService.URL_PREFIX + "/quizzes")
+    @POST("/api/quizzes")
     Observable<Response<Quiz>> createQuiz(@Field("name") String name, @Field("Description") String description);
 }

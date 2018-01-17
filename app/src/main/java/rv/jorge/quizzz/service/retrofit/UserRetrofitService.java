@@ -14,13 +14,13 @@ import rv.jorge.quizzz.model.User;
  */
 
 public interface UserRetrofitService {
-    @GET(RetrofitService.URL_PREFIX + "/users/login")
+    @GET("/api/users/login")
     Observable<User> login();
 
-    @GET(RetrofitService.URL_PREFIX + "/users/forgotPassword")
+    @GET("/api/users/forgotPassword")
     Observable<Response<User>> forgotMyPassword(@Query("email") String email);
 
     @FormUrlEncoded
-    @POST(RetrofitService.URL_PREFIX + "/users/registration")
+    @POST("/api/users/registration")
     Observable<Response<User>> signup(@Field("username") String username, @Field("email") String email, @Field("password") String password);
 }
