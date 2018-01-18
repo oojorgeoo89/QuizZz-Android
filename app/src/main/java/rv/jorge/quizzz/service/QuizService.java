@@ -82,15 +82,12 @@ public class QuizService {
                     });
         }
 
-        protected abstract Observable<Page<Quiz>> getObservableQuery(int index);
-
         public boolean isLastPage() {
             return !hasNext;
         }
 
-        public QuizRetrofitService getQuizRetrofitService() {
-            return quizRetrofitService;
-        }
+        protected abstract Observable<Page<Quiz>> getObservableQuery(int index);
+
     }
 
     private class PublicQuizzesPageIterator extends QuizPageIteratorRetrofit {

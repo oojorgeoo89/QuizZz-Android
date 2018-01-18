@@ -1,6 +1,6 @@
 package rv.jorge.quizzz.screens.support;
 
-import android.app.Fragment;
+import android.support.v4.app.Fragment;
 
 /**
  * Created by jorgerodriguez on 05/01/18.

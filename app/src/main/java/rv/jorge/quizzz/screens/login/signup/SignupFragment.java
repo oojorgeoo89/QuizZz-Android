@@ -1,9 +1,11 @@
-package rv.jorge.quizzz.screens;
+package rv.jorge.quizzz.screens.login.signup;
 
 
-import android.app.Fragment;
+import android.arch.lifecycle.ViewModelProvider;
+import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,12 +13,16 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import javax.inject.Inject;
+
 import rv.jorge.quizzz.QuizApplication;
 import rv.jorge.quizzz.R;
-import rv.jorge.quizzz.service.UserService;
-import rv.jorge.quizzz.service.support.HttpConstants;
 
 public class SignupFragment extends Fragment {
+
+    @Inject
+    ViewModelProvider.Factory viewModelFactory;
+    SignupViewModel signupViewModel;
 
     EditText username;
     EditText email;
@@ -34,13 +40,38 @@ public class SignupFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        UserService userService = QuizApplication.get(getActivity()).getUserService();
-
+        // Binding UI
         username = (EditText) view.findViewById(R.id.sign_up_username);
         email = (EditText) view.findViewById(R.id.sign_up_email);
         password = (EditText) view.findViewById(R.id.sign_up_password);
         repeatPassword = (EditText) view.findViewById(R.id.sign_up_repeat_password);
         submitSignup = (Button) view.findViewById(R.id.submit_sign_up);
+
+        // Injecting dependencies in Fragment
+        ((QuizApplication) getActivity().getApplication())
+                .getComponent()
+                .inject(this);
+
+
+        // Binding View Models
+        signupViewModel = ViewModelProviders.of(this, viewModelFactory).get(SignupViewModel.class);
+
+
+        // Setting up behavior
+        signupViewModel.getIsSignupSuccessfulObservable().observe(this, signupStatus -> {
+            switch (signupStatus) {
+                case OK:
+                    Toast.makeText(getActivity(), getString(R.string.signup_successful), Toast.LENGTH_LONG).show();
+                    getActivity().onBackPressed();
+                    break;
+                case CONFLICT:
+                    Toast.makeText(getActivity(), getString(R.string.signup_user_exists), Toast.LENGTH_LONG).show();
+                    break;
+                case UNKNOWN_ERROR:
+                    Toast.makeText(getActivity(), getString(R.string.unknown_error), Toast.LENGTH_LONG).show();
+            }
+
+        });
 
         submitSignup.setOnClickListener(v -> {
             if (username.getText().toString().equals("")) {
@@ -58,28 +89,9 @@ public class SignupFragment extends Fragment {
                 return;
             }
 
-            userService.signup(username.getText().toString(),
+            signupViewModel.signup(username.getText().toString(),
                     email.getText().toString(),
-                    password.getText().toString())
-            .subscribe(response -> {
-
-                switch (response.code()) {
-                    case HttpConstants.OK:
-                    case HttpConstants.CREATED:
-                        Toast.makeText(getActivity(), getString(R.string.signup_successful), Toast.LENGTH_LONG).show();
-                        getActivity().onBackPressed();
-                        break;
-                    case HttpConstants.CONFLICT:
-                        Toast.makeText(getActivity(), getString(R.string.signup_user_exists), Toast.LENGTH_LONG).show();
-                        break;
-                    default:
-                        Toast.makeText(getActivity(), getString(R.string.unknown_error), Toast.LENGTH_LONG).show();
-                }
-
-            }, throwable -> {
-                Toast.makeText(getActivity(), getString(R.string.unknown_error), Toast.LENGTH_LONG).show();
-            });
-
+                    password.getText().toString());
         });
     }
 }

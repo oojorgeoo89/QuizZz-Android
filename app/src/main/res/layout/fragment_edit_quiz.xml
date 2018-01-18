@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="rv.jorge.quizzz.screens.HomeFragment">
+    tools:context=".screens.quizlists.home.HomeFragment">
 
     <TextView
         style="@style/Text.Form"

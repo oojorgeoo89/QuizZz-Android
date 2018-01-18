@@ -1,8 +1,9 @@
 package rv.jorge.quizzz.screens;
 
-import android.app.Fragment;
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
+
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v4.app.FragmentManager;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -15,8 +16,14 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.widget.TextView;
 
+import javax.inject.Inject;
+
 import rv.jorge.quizzz.QuizApplication;
 import rv.jorge.quizzz.R;
+import rv.jorge.quizzz.screens.editquiz.EditQuizFragment;
+import rv.jorge.quizzz.screens.quizlists.home.HomeFragment;
+import rv.jorge.quizzz.screens.login.LoginFragment;
+import rv.jorge.quizzz.screens.quizlists.myquizzes.MyQuizzesFragment;
 import rv.jorge.quizzz.screens.support.FragmentUmbrella;
 import rv.jorge.quizzz.service.UserService;
 
@@ -25,19 +32,23 @@ public class MainActivity extends AppCompatActivity
         , SharedPreferences.OnSharedPreferenceChangeListener
         , FragmentUmbrella {
 
+    @Inject
+    UserService userService;
+
     private FragmentManager fragmentManager;
     private NavigationView navigationView;
 
     SharedPreferences prefs;
-    private SharedPreferences.OnSharedPreferenceChangeListener prefsListener;
-
-    UserService userService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        userService = QuizApplication.get(this).getUserService();
+        // Injecting dependencies in Fragment
+        ((QuizApplication) getApplication())
+                .getComponent()
+                .inject(this);
+
         prefs = PreferenceManager.getDefaultSharedPreferences(this);
         prefs.registerOnSharedPreferenceChangeListener(this);
 
@@ -60,7 +71,7 @@ public class MainActivity extends AppCompatActivity
         updateNavigationDrawer(userService.isLoggedIn());
 
         // Start up the initial fragment
-        fragmentManager = getFragmentManager();
+        fragmentManager = getSupportFragmentManager();
         if (fragmentManager.findFragmentById(R.id.main_fragment) == null) {
             swapFragment(new HomeFragment());
         }
@@ -84,7 +95,7 @@ public class MainActivity extends AppCompatActivity
         if (id == R.id.nav_home) {
             swapFragment(new HomeFragment());
         } else if (id == R.id.nav_add_quiz) {
-            swapFragment(new EditQuiz());
+            swapFragment(new EditQuizFragment());
         } else if (id == R.id.nav_my_quizzes) {
             swapFragment(new MyQuizzesFragment());
         } else if (id == R.id.nav_login) {

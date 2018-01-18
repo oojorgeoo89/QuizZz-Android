@@ -1,4 +1,4 @@
-package rv.jorge.quizzz.screens;
+package rv.jorge.quizzz.screens.quizlists;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -16,17 +16,19 @@ import rv.jorge.quizzz.model.Quiz;
  * Created by jorgerodriguez on 19/08/17.
  */
 
-public class QuizRecyclerAdapter extends RecyclerView.Adapter<QuizRecyclerAdapter.ViewHolder> {
+public class QuizListRecyclerAdapter extends RecyclerView.Adapter<QuizListRecyclerAdapter.ViewHolder> {
 
 
     private final Context context;
     private final LayoutInflater layoutInflater;
     private final List<Quiz> quizzes;
+    private final OnClickListener onClickListener;
 
-    public QuizRecyclerAdapter(Context context, List<Quiz> quizzes) {
+    public QuizListRecyclerAdapter(Context context, List<Quiz> quizzes, OnClickListener onClickListener) {
         this.context = context;
         layoutInflater = LayoutInflater.from(context);
         this.quizzes = quizzes;
+        this.onClickListener = onClickListener;
     }
 
     @Override
@@ -64,38 +66,17 @@ public class QuizRecyclerAdapter extends RecyclerView.Adapter<QuizRecyclerAdapte
             nameView = (TextView) itemView.findViewById(R.id.text_quiz_name);
             descriptionView = (TextView) itemView.findViewById(R.id.text_quiz_description);
 
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    /*
-                    TODO: Handle clicks on items
-                    Intent intent = new Intent(context, ShowBox.class);
-                    intent.putExtra(ShowBox.BOX_POSITION, getQuizPosition());
-
-                    context.startActivity(intent);
-                    */
-                }
+            itemView.setOnClickListener(v -> {
+                onClickListener.onClick(this.getAdapterPosition());
             });
-        }
-
-        public TextView getNameView() {
-            return nameView;
         }
 
         public void setName(String name) {
             this.nameView.setText(name);
         }
 
-        public TextView getDescriptionView() {
-            return descriptionView;
-        }
-
         public void setDescription(String description) {
             this.descriptionView.setText(description);
-        }
-
-        public int getQuizPosition() {
-            return quizPosition;
         }
 
         public void setPosition(int quizPosition) {
@@ -103,4 +84,7 @@ public class QuizRecyclerAdapter extends RecyclerView.Adapter<QuizRecyclerAdapte
         }
     }
 
+    public interface OnClickListener {
+        void onClick(int position);
+    }
 }
