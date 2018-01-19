@@ -25,8 +25,6 @@ import rv.jorge.quizzz.screens.login.signup.SignupFragment;
 import rv.jorge.quizzz.screens.support.FragmentUmbrella;
 import rv.jorge.quizzz.screens.support.InternalStatus;
 
-//import android.app.Fragment;
-
 public class LoginFragment extends Fragment {
 
     private static final String TAG = "LoginFragment";

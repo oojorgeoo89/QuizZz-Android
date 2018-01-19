@@ -11,7 +11,12 @@ import rv.jorge.quizzz.model.support.Page;
 import rv.jorge.quizzz.service.retrofit.QuizRetrofitService;
 
 /**
- * Created by jorgerodriguez on 29/12/17.
+ *
+ * Fetches Quiz metadata from the backend using a QuizRetrofitService.
+ *
+ * For requests in which the returned value is a Pageable, a QuizPageIterator
+ * specific to the request is returned to navigate through the pages.
+ *
  */
 
 public class QuizService {

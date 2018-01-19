@@ -1,9 +1,5 @@
 package rv.jorge.quizzz.model;
 
-/**
- * Created by jorgerodriguez on 01/01/18.
- */
-
 public class User {
     private long id;
     private String email;

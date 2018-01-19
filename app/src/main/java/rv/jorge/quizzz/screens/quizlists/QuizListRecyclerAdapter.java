@@ -13,7 +13,7 @@ import rv.jorge.quizzz.R;
 import rv.jorge.quizzz.model.Quiz;
 
 /**
- * Created by jorgerodriguez on 19/08/17.
+ * Standard implementation of a RecyclerView Adapter. It holds Quizzes.
  */
 
 public class QuizListRecyclerAdapter extends RecyclerView.Adapter<QuizListRecyclerAdapter.ViewHolder> {
@@ -42,7 +42,6 @@ public class QuizListRecyclerAdapter extends RecyclerView.Adapter<QuizListRecycl
         Quiz quiz = quizzes.get(position);
         holder.setName(quiz.getName());
         holder.setDescription(quiz.getDescription());
-        holder.setPosition(position);
     }
 
     @Override
@@ -58,7 +57,6 @@ public class QuizListRecyclerAdapter extends RecyclerView.Adapter<QuizListRecycl
 
         private final TextView nameView;
         private final TextView descriptionView;
-        private int quizPosition;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -77,10 +75,6 @@ public class QuizListRecyclerAdapter extends RecyclerView.Adapter<QuizListRecycl
 
         public void setDescription(String description) {
             this.descriptionView.setText(description);
-        }
-
-        public void setPosition(int quizPosition) {
-            this.quizPosition = quizPosition;
         }
     }
 

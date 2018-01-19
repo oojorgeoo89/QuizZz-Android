@@ -11,7 +11,12 @@ import rv.jorge.quizzz.screens.support.InternalStatus;
 import rv.jorge.quizzz.service.QuizService;
 
 /**
- * Created by jorgerodriguez on 18/01/18.
+ *
+ * Abstract ViewModel containing the common code to create a list of Quizzes.
+ *
+ * To use it, extend it and override getQueryType so we can use the appropriate iterator
+ * from QuizService.
+ *
  */
 
 public abstract class QuizListViewModel extends ViewModel {
@@ -47,6 +52,9 @@ public abstract class QuizListViewModel extends ViewModel {
     }
 
     public void arrivedToEndOfList() {
+        if (quizPageIterator.isLastPage())
+            return;
+
         quizPageIterator.getNextPage()
                 .subscribe(quizzes -> {
                     quizListObservable.postValue(quizzes);

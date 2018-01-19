@@ -8,11 +8,7 @@ import rv.jorge.quizzz.service.QuizService;
 import rv.jorge.quizzz.service.UserService;
 import rv.jorge.quizzz.service.retrofit.QuizRetrofitService;
 import rv.jorge.quizzz.service.retrofit.UserRetrofitService;
-import rv.jorge.quizzz.service.support.BasicAuthInterceptor;
-
-/**
- * Created by jorgerodriguez on 28/12/17.
- */
+import rv.jorge.quizzz.service.support.AuthenticationInterceptor;
 
 @Module(includes = {NetworkModule.class})
 public class QuizApplicationModule {
@@ -23,6 +19,7 @@ public class QuizApplicationModule {
         this.context = context;
     }
 
+    @QuizApplicationScope
     @Provides
     Context getContext() {
         return context;
@@ -36,8 +33,8 @@ public class QuizApplicationModule {
 
     @QuizApplicationScope
     @Provides
-    UserService getUserService(Context context, UserRetrofitService userRetrofitService, BasicAuthInterceptor basicAuthInterceptor) {
-        return new UserService(context, userRetrofitService, basicAuthInterceptor);
+    UserService getUserService(Context context, UserRetrofitService userRetrofitService, AuthenticationInterceptor authenticationInterceptor) {
+        return new UserService(context, userRetrofitService, authenticationInterceptor);
     }
 
 }

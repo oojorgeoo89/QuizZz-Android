@@ -7,10 +7,6 @@ import rv.jorge.quizzz.screens.support.InternalStatus;
 import rv.jorge.quizzz.service.UserService;
 import rv.jorge.quizzz.service.support.HttpConstants;
 
-/**
- * Created by jorgerodriguez on 18/01/18.
- */
-
 public class SignupViewModel extends ViewModel {
 
     private UserService userService;

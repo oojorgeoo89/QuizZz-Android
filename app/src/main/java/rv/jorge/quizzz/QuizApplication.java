@@ -7,10 +7,6 @@ import rv.jorge.quizzz.di.DaggerQuizApplicationComponent;
 import rv.jorge.quizzz.di.QuizApplicationComponent;
 import rv.jorge.quizzz.di.QuizApplicationModule;
 
-/**
- * Created by jorgerodriguez on 28/12/17.
- */
-
 public class QuizApplication extends Application {
 
     private QuizApplicationComponent component;

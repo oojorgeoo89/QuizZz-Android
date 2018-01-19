@@ -1,13 +1,13 @@
 package rv.jorge.quizzz.screens;
 
 
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v4.app.FragmentManager;
-import android.content.SharedPreferences;
+import android.arch.lifecycle.ViewModelProvider;
+import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -20,25 +20,32 @@ import javax.inject.Inject;
 
 import rv.jorge.quizzz.QuizApplication;
 import rv.jorge.quizzz.R;
+import rv.jorge.quizzz.model.User;
 import rv.jorge.quizzz.screens.editquiz.EditQuizFragment;
-import rv.jorge.quizzz.screens.quizlists.home.HomeFragment;
 import rv.jorge.quizzz.screens.login.LoginFragment;
+import rv.jorge.quizzz.screens.quizlists.home.HomeFragment;
 import rv.jorge.quizzz.screens.quizlists.myquizzes.MyQuizzesFragment;
 import rv.jorge.quizzz.screens.support.FragmentUmbrella;
-import rv.jorge.quizzz.service.UserService;
 
+/**
+ *
+ * MainActivity hosts the Application Drawer and orchestrates the Fragment changes
+ * when the user selects an item from the Drawer.
+ *
+ * MainActivity is responsible for updating the Drawer when the user logs in/out.
+ *
+ */
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener
-        , SharedPreferences.OnSharedPreferenceChangeListener
         , FragmentUmbrella {
 
     @Inject
-    UserService userService;
+    ViewModelProvider.Factory viewModelFactory;
+    MainActivityViewModel mainViewModel;
+    LogoutViewModel logoutViewModel;
 
     private FragmentManager fragmentManager;
     private NavigationView navigationView;
-
-    SharedPreferences prefs;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,8 +56,16 @@ public class MainActivity extends AppCompatActivity
                 .getComponent()
                 .inject(this);
 
-        prefs = PreferenceManager.getDefaultSharedPreferences(this);
-        prefs.registerOnSharedPreferenceChangeListener(this);
+        // Binding View Models
+        logoutViewModel = ViewModelProviders.of(this, viewModelFactory).get(LogoutViewModel.class);
+        mainViewModel = ViewModelProviders.of(this).get(MainActivityViewModel.class);
+
+        mainViewModel.getIsUserLoggedInObservable().observe(this, user -> {
+            updateNavigationDrawer(user);
+            if (user != null && shouldLoginChangeFragment()) {
+                swapFragment(new HomeFragment());
+            }
+        });
 
         // Setting up the toolbar
         setContentView(R.layout.activity_drawer);
@@ -68,7 +83,7 @@ public class MainActivity extends AppCompatActivity
         // Setting up the drawer's menu
         navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-        updateNavigationDrawer(userService.isLoggedIn());
+        mainViewModel.checkIsUserLoggedIn();
 
         // Start up the initial fragment
         fragmentManager = getSupportFragmentManager();
@@ -76,6 +91,16 @@ public class MainActivity extends AppCompatActivity
             swapFragment(new HomeFragment());
         }
 
+    }
+
+    private boolean shouldLoginChangeFragment() {
+        Fragment currentFragment = fragmentManager.findFragmentById(R.id.main_fragment);
+
+        if (currentFragment.getClass().equals(HomeFragment.class)) {
+            return false;
+        }
+
+        return true;
     }
 
     @Override
@@ -101,8 +126,7 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_login) {
             swapFragment(new LoginFragment());
         } else if (id == R.id.nav_logout) {
-            userService.logout();
-            swapFragment(new HomeFragment());
+            logoutViewModel.logout();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -117,25 +141,13 @@ public class MainActivity extends AppCompatActivity
         fragmentTransaction.commit();
     }
 
-    @Override
-    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-        if (key.equals(getString(R.string.prefs_is_logged_in))) {
-            boolean isLoggedIn = sharedPreferences.getBoolean(getString(R.string.prefs_is_logged_in), false);
-            updateNavigationDrawer(isLoggedIn);
-            if (isLoggedIn) {
-                swapFragment(new HomeFragment());
-            }
-        }
-    }
-
-    private void updateNavigationDrawer(boolean isLoggedIn) {
-        if (isLoggedIn) {
+    private void updateNavigationDrawer(User user) {
+        if (user != null) {
             navigationView.getMenu().clear();
             navigationView.inflateMenu(R.menu.drawer_logged_in);
             ((TextView) navigationView.getHeaderView(0)
                     .findViewById(R.id.navigation_drawer_username))
-                    .setText(prefs.getString(getString(R.string.prefs_username),
-                            getString(R.string.navigation_drawer_default_username)));
+                    .setText(user.getUsername());
         } else {
             navigationView.getMenu().clear();
             navigationView.inflateMenu(R.menu.drawer_not_logged_in);

@@ -3,7 +3,7 @@ package rv.jorge.quizzz.model.support;
 import java.util.List;
 
 /**
- * Created by jorgerodriguez on 19/08/17.
+ * Models the Pagination metadata sent from the Server.
  */
 
 public class Page<T> {

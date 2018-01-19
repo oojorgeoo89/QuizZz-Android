@@ -2,10 +2,6 @@ package rv.jorge.quizzz.model;
 
 import java.util.List;
 
-/**
- * Created by jorgerodriguez on 19/08/17.
- */
-
 public class Quiz {
 
     private Long id;

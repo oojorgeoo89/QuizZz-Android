@@ -3,7 +3,10 @@ package rv.jorge.quizzz.screens.support;
 import android.support.v4.app.Fragment;
 
 /**
- * Created by jorgerodriguez on 05/01/18.
+ *
+ * This interface indicates than an Activity or Fragment has the ability to add Fragments
+ * to the Call Stack.
+ *
  */
 
 public interface FragmentUmbrella {

@@ -9,7 +9,11 @@ import rv.jorge.quizzz.service.QuizService;
 import rv.jorge.quizzz.service.support.HttpConstants;
 
 /**
- * Created by jorgerodriguez on 18/01/18.
+ *
+ * Handles the Creation and Edition of Quizzes.
+ *
+ * It is responsible for reporting back to the QuizService so data is in Sync with the Data Source.
+ *
  */
 
 public class EditQuizViewModel extends ViewModel {

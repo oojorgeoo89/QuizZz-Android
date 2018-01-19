@@ -10,9 +10,6 @@ import rv.jorge.quizzz.screens.login.LoginFragment;
 import rv.jorge.quizzz.screens.login.signup.SignupFragment;
 import rv.jorge.quizzz.screens.quizlists.QuizListFragment;
 
-/**
- * Created by jorgerodriguez on 28/12/17.
- */
 @QuizApplicationScope
 @Component(modules = {QuizApplicationModule.class, ViewModelModule.class})
 public interface QuizApplicationComponent {

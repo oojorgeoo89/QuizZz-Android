@@ -13,10 +13,6 @@ import rv.jorge.quizzz.screens.quizlists.myquizzes.MyQuizzesViewModel;
 import rv.jorge.quizzz.service.QuizService;
 import rv.jorge.quizzz.service.UserService;
 
-/**
- * Created by jorgerodriguez on 18/01/18.
- */
-
 public class QuizViewModelFactory implements ViewModelProvider.Factory {
 
     UserService userService;
@@ -42,6 +38,8 @@ public class QuizViewModelFactory implements ViewModelProvider.Factory {
             return (T) new HomeViewModel(quizService);
         else if (modelClass.isAssignableFrom(MyQuizzesViewModel.class))
             return (T) new MyQuizzesViewModel(quizService);
+        else if (modelClass.isAssignableFrom(LogoutViewModel.class))
+            return (T) new LogoutViewModel(userService);
 
         throw new IllegalArgumentException("Unexpected ViewModel request");
     }

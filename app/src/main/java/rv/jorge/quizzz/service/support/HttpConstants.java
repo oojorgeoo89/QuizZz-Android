@@ -1,7 +1,7 @@
 package rv.jorge.quizzz.service.support;
 
 /**
- * Created by jorgerodriguez on 05/01/18.
+ * HTTP Code Responses
  */
 
 public class HttpConstants {

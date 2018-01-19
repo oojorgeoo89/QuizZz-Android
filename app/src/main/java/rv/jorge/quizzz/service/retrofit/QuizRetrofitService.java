@@ -11,10 +11,6 @@ import retrofit2.http.Query;
 import rv.jorge.quizzz.model.Quiz;
 import rv.jorge.quizzz.model.support.Page;
 
-/**
- * Created by jorgerodriguez on 31/12/17.
- */
-
 public interface QuizRetrofitService {
 
     @GET("/api/quizzes/{quiz_id}")

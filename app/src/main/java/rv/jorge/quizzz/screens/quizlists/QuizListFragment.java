@@ -18,6 +18,15 @@ import rv.jorge.quizzz.R;
 import rv.jorge.quizzz.model.Quiz;
 import rv.jorge.quizzz.screens.support.EndlessScrollListener;
 
+/**
+ *
+ * Abstract class that contains the common code to create a list of Quizzes.
+ *
+ * In order to function, it needs to know what type of quizzes we are interested in. We can provide
+ * that by extending the class and giving it the appropiate QuizListViewModel.
+ *
+ */
+
 public abstract class QuizListFragment extends Fragment {
 
     public static final String KEY_SAVED_INSTANCE = "rv.jorge.quizzz.controller.QuizListFragment.KEY_SAVED_INSTANCE";

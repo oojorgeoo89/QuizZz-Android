@@ -3,9 +3,6 @@ package rv.jorge.quizzz.model;
 import java.util.Calendar;
 import java.util.List;
 
-/**
- * Created by jorgerodriguez on 19/08/17.
- */
 
 public class Question {
 

@@ -1,11 +1,12 @@
 package rv.jorge.quizzz.screens.support;
 
 /**
- * Created by jorgerodriguez on 18/01/18.
+ * Default status to be passed from ViewModels to Views.
  */
 
 public enum InternalStatus {
     OK,
     CONFLICT,
-    NOT_FOUND, UNKNOWN_ERROR
+    NOT_FOUND,
+    UNKNOWN_ERROR
 }
