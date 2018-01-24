@@ -1,0 +1,28 @@
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="rv.jorge.quizzz.screens.playquiz.PlayQuizProgressFragment">
+    
+    <ProgressBar
+        android:id="@+id/pbar_play_progress"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="0dp"
+        android:layout_height="16dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="32dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+    
+    <TextView
+        android:id="@+id/txt_progress_details"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        tools:text="2/20"
+        app:layout_constraintEnd_toEndOf="@id/pbar_play_progress"
+        app:layout_constraintTop_toBottomOf="@id/pbar_play_progress"/>
+
+</android.support.constraint.ConstraintLayout>

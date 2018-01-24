@@ -35,6 +35,7 @@ public class NetworkModule {
     Retrofit getRetrofitClient(CookieAuthenticationInterceptor cookieAuthenticationInterceptor) {
         Retrofit.Builder retrofitBuilder = new Retrofit.Builder()
                 .baseUrl("http://10.0.2.2:8080")
+                //.baseUrl("http://192.168.2.4:8080")
                 .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create());
 

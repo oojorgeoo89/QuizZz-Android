@@ -4,7 +4,7 @@ import android.arch.lifecycle.ViewModelProvider;
 
 import dagger.Module;
 import dagger.Provides;
-import rv.jorge.quizzz.screens.QuizViewModelFactory;
+import rv.jorge.quizzz.screens.support.QuizViewModelFactory;
 import rv.jorge.quizzz.service.QuizService;
 import rv.jorge.quizzz.service.UserService;
 

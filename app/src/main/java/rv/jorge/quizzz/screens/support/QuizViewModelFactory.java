@@ -1,10 +1,12 @@
-package rv.jorge.quizzz.screens;
+package rv.jorge.quizzz.screens.support;
 
 import android.arch.lifecycle.ViewModel;
 import android.arch.lifecycle.ViewModelProvider;
 import android.support.annotation.NonNull;
 
+import rv.jorge.quizzz.screens.LogoutViewModel;
 import rv.jorge.quizzz.screens.editquiz.EditQuizViewModel;
+import rv.jorge.quizzz.screens.playquiz.PlayQuizViewModel;
 import rv.jorge.quizzz.screens.quizlists.home.HomeViewModel;
 import rv.jorge.quizzz.screens.login.ForgotPassword.ForgotPasswordViewModel;
 import rv.jorge.quizzz.screens.login.LoginViewModel;
@@ -40,6 +42,8 @@ public class QuizViewModelFactory implements ViewModelProvider.Factory {
             return (T) new MyQuizzesViewModel(quizService);
         else if (modelClass.isAssignableFrom(LogoutViewModel.class))
             return (T) new LogoutViewModel(userService);
+        else if (modelClass.isAssignableFrom(PlayQuizViewModel.class))
+            return (T) new PlayQuizViewModel(quizService);
 
         throw new IllegalArgumentException("Unexpected ViewModel request");
     }

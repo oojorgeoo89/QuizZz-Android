@@ -2,9 +2,9 @@ package rv.jorge.quizzz.screens.quizlists.home;
 
 import android.arch.lifecycle.ViewModelProvider;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +13,8 @@ import javax.inject.Inject;
 
 import rv.jorge.quizzz.QuizApplication;
 import rv.jorge.quizzz.R;
+import rv.jorge.quizzz.model.Quiz;
+import rv.jorge.quizzz.screens.playquiz.PlayQuizActivity;
 import rv.jorge.quizzz.screens.quizlists.QuizListFragment;
 import rv.jorge.quizzz.screens.quizlists.QuizListRecyclerAdapter;
 import rv.jorge.quizzz.screens.quizlists.QuizListViewModel;
@@ -48,7 +50,13 @@ public class HomeFragment extends QuizListFragment {
     @Override
     protected QuizListRecyclerAdapter.OnClickListener getOnClickListener() {
         return position -> {
-            Log.d(TAG, "Got a click on Home Fragment on position " + position);
+            Quiz quiz = getQuizzes().get(position);
+
+            Intent intent = new Intent(getActivity(), PlayQuizActivity.class);
+            intent.putExtra(PlayQuizActivity.ARGS_QUIZ_ID, quiz.getId());
+            intent.putExtra(PlayQuizActivity.ARGS_QUIZ_TITLE, quiz.getName());
+
+            startActivity(intent);
         };
     }
 

@@ -6,8 +6,11 @@ import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 import retrofit2.Response;
+import rv.jorge.quizzz.model.Question;
 import rv.jorge.quizzz.model.Quiz;
+import rv.jorge.quizzz.model.support.AnswerBundle;
 import rv.jorge.quizzz.model.support.Page;
+import rv.jorge.quizzz.model.support.QuizResults;
 import rv.jorge.quizzz.service.retrofit.QuizRetrofitService;
 
 /**
@@ -43,6 +46,24 @@ public class QuizService {
                 throw new IllegalArgumentException();
         }
     }
+
+    public Observable<List<Question>> getQuestionsByQuiz(long quizId) {
+        return quizRetrofitService.getQuestionsByQuizId(quizId, true)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
+
+    public Observable<QuizResults> submitAnswers(long quizId, List<AnswerBundle> answers) {
+        return quizRetrofitService.submitAnswers(quizId, answers)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
+
+    /**
+     *
+     * Quiz Page Iterators
+     *
+     */
 
     public enum QueryType {
         PUBLIC_ALL_QUIZZES,

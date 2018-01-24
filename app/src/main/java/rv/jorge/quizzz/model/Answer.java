@@ -1,13 +1,11 @@
 package rv.jorge.quizzz.model;
 
-import java.util.Calendar;
-
 public class Answer {
 
     private Long id;
     private String text;
     private Integer order;
-    private Calendar createdDate;
+    private Long createdDate;
 
     public Long getId() {
         return id;
@@ -33,11 +31,11 @@ public class Answer {
         this.order = order;
     }
 
-    public Calendar getCreatedDate() {
+    public Long getCreatedDate() {
         return createdDate;
     }
 
-    public void setCreatedDate(Calendar createdDate) {
+    public void setCreatedDate(Long createdDate) {
         this.createdDate = createdDate;
     }
 }

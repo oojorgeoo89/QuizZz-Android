@@ -39,6 +39,8 @@ public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener
         , FragmentUmbrella {
 
+    private static final String HOME_FRAGMENT_TAG = "HOME_FRAGMENT_TAG";
+
     @Inject
     ViewModelProvider.Factory viewModelFactory;
     MainActivityViewModel mainViewModel;
@@ -46,6 +48,8 @@ public class MainActivity extends AppCompatActivity
 
     private FragmentManager fragmentManager;
     private NavigationView navigationView;
+
+    private boolean shouldBackGoToHome = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,7 +67,7 @@ public class MainActivity extends AppCompatActivity
         mainViewModel.getIsUserLoggedInObservable().observe(this, user -> {
             updateNavigationDrawer(user);
             if (user != null && shouldLoginChangeFragment()) {
-                swapFragment(new HomeFragment());
+                navigateBackToHome();
             }
         });
 
@@ -88,7 +92,7 @@ public class MainActivity extends AppCompatActivity
         // Start up the initial fragment
         fragmentManager = getSupportFragmentManager();
         if (fragmentManager.findFragmentById(R.id.main_fragment) == null) {
-            swapFragment(new HomeFragment());
+            navigateBackToHome();
         }
 
     }
@@ -109,7 +113,15 @@ public class MainActivity extends AppCompatActivity
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
-            super.onBackPressed();
+            if (shouldBackGoToHome) {
+                shouldBackGoToHome = false;
+                navigateBackToHome();
+            } else {
+                if (fragmentManager.getBackStackEntryCount() == 1)
+                    finish();
+                else
+                    super.onBackPressed();
+            }
         }
     }
 
@@ -135,7 +147,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void swapFragment(Fragment fragment) {
-        fragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+        clearBackStack();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.main_fragment, fragment);
         fragmentTransaction.commit();
@@ -159,9 +171,35 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void addFragmentToStack(Fragment newFragment) {
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.main_fragment, newFragment);
-        fragmentTransaction.addToBackStack(null);
-        fragmentTransaction.commit();
+        fragmentManager
+                .beginTransaction()
+                .replace(R.id.main_fragment, newFragment)
+                .addToBackStack(null)
+                .commit();
     }
+
+    @Override
+    public void navigateBackToHomeOnNextBackKeyPress() {
+        shouldBackGoToHome = true;
+    }
+
+    @Override
+    public void navigateBackToHome() {
+        if (!fragmentManager.popBackStackImmediate(HOME_FRAGMENT_TAG, 0)) {
+
+            clearBackStack();
+
+            fragmentManager
+                    .beginTransaction()
+                    .replace(R.id.main_fragment, new HomeFragment())
+                    .addToBackStack(HOME_FRAGMENT_TAG)
+                    .commit();
+        }
+    }
+
+    private void clearBackStack() {
+        fragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+    }
+
+
 }

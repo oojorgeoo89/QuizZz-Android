@@ -11,4 +11,6 @@ import android.support.v4.app.Fragment;
 
 public interface FragmentUmbrella {
     void addFragmentToStack(Fragment newFragment);
+    void navigateBackToHomeOnNextBackKeyPress();
+    void navigateBackToHome();
 }

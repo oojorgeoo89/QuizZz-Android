@@ -51,5 +51,12 @@
     <string name="empty_username_warning">Please, enter a username</string>
     <string name="quiz_logo_label">QuizZz</string>
 
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="btn_submit_answer">Submit</string>
+    <string name="play_no_answer_selected">Please, select an answer</string>
+    <string name="title_activity_play_quiz">PlayQuizActivity</string>
+    <string name="btn_finish_game">Finish!</string>
+
 
 </resources>

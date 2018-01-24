@@ -1,6 +1,5 @@
 package rv.jorge.quizzz.model;
 
-import java.util.Calendar;
 import java.util.List;
 
 
@@ -9,7 +8,7 @@ public class Question {
     private Long id;
     private String text;
     private Integer order;
-    private Calendar createdDate;
+    private Long createdDate;
 
     private List<Answer> answers;
 
@@ -37,11 +36,11 @@ public class Question {
         this.order = order;
     }
 
-    public Calendar getCreatedDate() {
+    public Long getCreatedDate() {
         return createdDate;
     }
 
-    public void setCreatedDate(Calendar createdDate) {
+    public void setCreatedDate(Long createdDate) {
         this.createdDate = createdDate;
     }
 
